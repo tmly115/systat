@@ -63,8 +63,18 @@ void loopcpusage(void){
 	return;
 }
 
+void showmemusage(void){
+	printf("%d%%\n", memusage());
+	return;
+}
 
-
+void loopmemusage(void){
+	while(1){
+		showmemusage();
+		sleep(1);
+	}
+	return;
+}
 void systat(void){
 	printf("CPU: %d%% \tRAM: %d%%\n", cpusage(), memusage());
 	return;
@@ -84,10 +94,18 @@ int main(int argc, char *argv[]){
 
 	for(int i = 0; argc > i; i++){
 		if(strcmp(argv[i], "loop") == 0){
-			loopsystat();
-		}
+			if(argc > i + 1){
+				if(strcmp(argv[i + 1], "cpu") == 0)
+					loopcpusage();
+				if(strcmp(argv[i + 1], "ram") == 0)
+					loopmemusage();
+			} else 
+				loopsystat();
+		} else if(strcmp(argv[i], "cpu") == 0)
+			showcpusage();
+		else if(strcmp(argv[i], "ram") == 0)
+			showmemusage();
+		
 	}
-
-	memusage();
 	return 0;
 }
